@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CalculatorButton from '../components/CalculatorButton';
 import { handleDecimal, calculateResult } from '../utils/calculatorLogic';
+import { ThemeContext } from '../context/ThemeContext';
 
 export default function CalculatorScreen() {
   const [display, setDisplay] = React.useState('');
+  const { theme } = useContext(ThemeContext);
 
   const handlePress = (value) => {
     setDisplay((prev) => prev + value);
@@ -14,8 +16,10 @@ export default function CalculatorScreen() {
   const backspace = () => setDisplay((prev) => prev.slice(0, -1));
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.display}>{display || '0'}</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.display, { color: theme.colors.text }]}>
+        {display || '0'}
+      </Text>
 
       <View style={styles.row}>
         <CalculatorButton label="C" onPress={clearDisplay} color="#b00020" />
@@ -65,12 +69,10 @@ export default function CalculatorScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
     justifyContent: 'flex-end',
     padding: 15,
   },
   display: {
-    color: '#fff',
     fontSize: 64,
     textAlign: 'right',
     marginBottom: 20,

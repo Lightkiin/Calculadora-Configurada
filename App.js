@@ -1,11 +1,14 @@
 import React from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
-import CalculatorScreen from './src/screens/CalculatorScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import TopTabs from './src/navigation/TopTabs';
+import ThemeProvider from './src/context/ThemeContext';
 
 export default function App() {
   return (
-    <PaperProvider>
-      <CalculatorScreen />
-    </PaperProvider>
+    <ThemeProvider>
+      <NavigationContainer>
+        <TopTabs />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
