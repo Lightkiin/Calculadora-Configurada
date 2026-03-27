@@ -1,3 +1,4 @@
+// TopTabs.js
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Dimensions, StatusBar } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -17,30 +18,35 @@ export default function TopTabs() {
         tabBarIndicatorStyle: { height: 0 },
       }}
       tabBar={({ state, navigation }) => {
-        const statusBarHeight = StatusBar.currentHeight || 0; // Altura da status bar
+        const statusBarHeight = StatusBar.currentHeight || 0;
 
         return (
-          <View style={{ flexDirection: 'row', height: 60, marginTop: statusBarHeight }}>
-            {state.routes.map((route, index) => {
-              const focused = state.index === index;
+          <View>
+            {/* Área da status bar */}
+            <View style={{ height: statusBarHeight, backgroundColor: 'black' }} />
 
-              // Ícones corretos
-              let iconName = '';
-              if (route.name === 'Calculadora') iconName = 'calculate';
-              else if (route.name === 'Configurações') iconName = 'settings';
+            {/* Barra de abas */}
+            <View style={{ flexDirection: 'row', height: 60 }}>
+              {state.routes.map((route, index) => {
+                const focused = state.index === index;
 
-              const backgroundColor = focused ? 'green' : 'black';
+                let iconName = '';
+                if (route.name === 'Calculadora') iconName = 'calculate';
+                else if (route.name === 'Configurações') iconName = 'settings';
 
-              return (
-                <TouchableOpacity
-                  key={route.key}
-                  onPress={() => navigation.navigate(route.name)}
-                  style={[styles.tabItem, { backgroundColor, width: width / state.routes.length }]}
-                >
-                  <MaterialIcons name={iconName} size={28} color="white" />
-                </TouchableOpacity>
-              );
-            })}
+                const backgroundColor = focused ? 'green' : 'black';
+
+                return (
+                  <TouchableOpacity
+                    key={route.key}
+                    onPress={() => navigation.navigate(route.name)}
+                    style={[styles.tabItem, { backgroundColor, width: width / state.routes.length }]}
+                  >
+                    <MaterialIcons name={iconName} size={28} color="white" />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
           </View>
         );
       }}
