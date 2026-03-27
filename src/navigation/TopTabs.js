@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Dimensions, StatusBar } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import CalculatorScreen from '../screens/CalculatorScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import { MaterialIcons } from '@expo/vector-icons'; // ✅ Usando Expo Vector Icons
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');
@@ -17,12 +17,14 @@ export default function TopTabs() {
         tabBarIndicatorStyle: { height: 0 },
       }}
       tabBar={({ state, navigation }) => {
+        const statusBarHeight = StatusBar.currentHeight || 0; // Altura da status bar
+
         return (
-          <View style={{ flexDirection: 'row', height: 60 }}>
+          <View style={{ flexDirection: 'row', height: 60, marginTop: statusBarHeight }}>
             {state.routes.map((route, index) => {
               const focused = state.index === index;
 
-              // ⚡ Ajustando nomes de ícones corretamente
+              // Ícones corretos
               let iconName = '';
               if (route.name === 'Calculadora') iconName = 'calculate';
               else if (route.name === 'Configurações') iconName = 'settings';
